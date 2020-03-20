@@ -4,14 +4,18 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
 from numpy.random import seed
 seed(10132017)
-from tensorflow import set_random_seed
-set_random_seed(18071991)
+
+import tensorflow
+tensorflow.random.set_seed(18071991)
 from data_loaders import load_data
 from dl_models import build_BILSTM, build_LSTM, build_CNN, build_pre_normalAE, build_pre_denoiseAE, build_RBM
 from normal_models import build_SVR, build_RF, build_NN
 from sklearn.metrics import mean_squared_error, mean_absolute_error 
 import logging
 from sklearn.preprocessing import MinMaxScaler
+from feature_extract import gen_fea
+
+
 
 log = "output.log"
 logging.basicConfig(filename=log,level=logging.DEBUG,format='%(asctime)s %(message)s', datefmt='%d/%m/%Y %H:%M:%S')
@@ -21,6 +25,14 @@ if __name__ == '__main__':
 		logging.info("conducting exp.")
 		t = load_data(True)
 		X_train, y_train, X_test, y_test = t[0], t[1], t[2], t[3]
+		
+		print(X_train.shape)
+		print(y_train.shape)
+		
+		print(X_test.shape)
+		print(y_test.shape)
+		
+
 		data_dim = X_train.shape[1]
     	
     	#liner svm
@@ -103,4 +115,4 @@ if __name__ == '__main__':
 		score = mean_squared_error(y_pred, y_test)
 		mae_score = mean_absolute_error(y_pred, y_test)
 		logging.info("   cnn result: %f_%f" %(score, mae_score))
-
+		

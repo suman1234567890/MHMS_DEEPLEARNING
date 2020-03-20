@@ -1,13 +1,13 @@
 from numpy.random import seed
 seed(10132017)
-from tensorflow import set_random_seed
-set_random_seed(18071991)
+import tensorflow 
+tensorflow.random.set_seed(18071991)
 from keras.models import Sequential
 from keras.layers import LSTM, Bidirectional
 from keras.layers.core import Flatten, Dense, Dropout
 from keras.layers import Input, Dense, Flatten
 from keras.layers import Conv1D,MaxPooling1D
-from dbn.tensorflow import SupervisedDBNRegression
+from dbn import SupervisedDBNRegression
 
 dropout_rate = 0.2
 FINAL_DIM = 900 
