@@ -24,15 +24,19 @@ if __name__ == '__main__':
 		idx_test = 1
 		logging.info("conducting exp.")
 		#t = load_data(True)
-		t=LoadIt()
+		t=LoadIt3103()
 		
 		X_train, y_train, X_test, y_test = t[0], t[1], t[2], t[3]
 		data_dim = X_train.shape[1]
-    	
+		logging.info("X_Train: %s" %(t[0]))
+		logging.info("Y_Train: %s" %(t[1]))
+		logging.info("X_test: %s" %(t[2]))
+		logging.info("y_test: %s" %(t[3]))
     	#liner svm
 		linear_svr = build_SVR('linear')
 		linear_svr.fit(X_train, y_train)
 		y_pred = linear_svr.predict(X_test)
+		logging.info("   linear predicted result: %s" %(y_pred))
 		score= mean_squared_error(y_pred, y_test)
 		mae_score = mean_absolute_error(y_pred, y_test)
 		logging.info("   linear svr result: %f_%f" %(score, mae_score))

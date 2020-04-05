@@ -87,13 +87,13 @@ def extract_fea_cust(data_slice, num_stat = 10):
 	data_fea.append(rms_fea(data_slice))
 	data_fea.append(var_fea(data_slice))
 	data_fea.append(max_fea(data_slice))
-	data_fea.append(pp_fea(data_slice))
-	data_fea.append(skew_fea(data_slice))
-	data_fea.append(kurt_fea(data_slice))
-	data_fea.append(wave_fea(data_slice))
-	data_fea.append(spectral_kurt(data_slice))
-	data_fea.append(spectral_skw(data_slice))
-	data_fea.append(spectral_pow(data_slice))
+	#data_fea.append(pp_fea(data_slice))
+	#data_fea.append(skew_fea(data_slice))
+	#data_fea.append(kurt_fea(data_slice))
+	#data_fea.append(wave_fea(data_slice))
+	#data_fea.append(spectral_kurt(data_slice))
+	#data_fea.append(spectral_skw(data_slice))
+	#data_fea.append(spectral_pow(data_slice))
 	data_fea = np.array(data_fea)
 	return data_fea.reshape((1,dim_feature*num_stat))
 		
@@ -195,9 +195,9 @@ def customFeatureExtract1903(data,sample_size):
 			#print("input data")
 			#print(new_data[:,column])
 			y = extract_fea_cust(new_data[:,column])
-			z = np.reshape(y, ( no_of_feature,1))
+			z = np.reshape(y, ( 1,no_of_feature))
 			#print("extracted feature Z")
-			#print(z)
+			print(z)
 			#print("extracted feature Y")
 			#print(y)
 			#print("extracted feature")
@@ -217,4 +217,81 @@ def customFeatureExtract1903(data,sample_size):
 		
 	print("Final",result_array_final.shape)
 	print(result_array_final)	
-	return data
+	return result_array_final
+def customFeatureExtract3103(data,sample_size):
+	#print(data)
+	#new_data = np.ones((data.shape[0],data.shape[1]), dtype=np.float32)
+	row = 0
+	column = 0
+	no_of_feature = 10
+	result_array_final = np.array([])
+	while (column < data.shape[1]):
+		result_array = np.array([])
+		
+		#print("input data")
+		#print(new_data[:,column])
+		print("----------")
+		print("column" )
+		print(column)
+		print(data[:,column])
+		print("----------")
+		y = extract_fea_cust(data[:,column])
+		result_array = np.reshape(y, ( 1,no_of_feature))
+		#print("extracted feature Z")
+		#print(result_array)
+		#print("extracted feature Y")
+		#print(y)
+		#print("extracted feature")
+		
+		column = column + 1
+					
+		
+		if (result_array_final.shape[0] < 1):
+			result_array_final = result_array
+		else:
+			result_array_final = np.append(result_array_final,result_array,axis=0)
+		#print("Row" ,column)
+		#print(result_array)
+		
+	#print("Final",result_array_final.shape)
+	#print(result_array_final)	
+	return result_array_final
+
+def customFeatureExtract0404(data,sample_size):
+	#print(data)
+	#new_data = np.ones((data.shape[0],data.shape[1]), dtype=np.float32)
+	row = 0
+	column = 0
+	no_of_feature = 3
+	result_array_final = np.array([])
+	while (column < data.shape[1]):
+		result_array = np.array([])
+		
+		#print("input data")
+		#print(new_data[:,column])
+		print("----------")
+		print("column" )
+		print(column)
+		print(data[:,column])
+		print("----------")
+		y = extract_fea_cust(data[:,column],no_of_feature)
+		result_array = np.reshape(y, ( 1,no_of_feature))
+		#print("extracted feature Z")
+		#print(result_array)
+		#print("extracted feature Y")
+		#print(y)
+		#print("extracted feature")
+		
+		column = column + 1
+					
+		
+		if (result_array_final.shape[0] < 1):
+			result_array_final = result_array
+		else:
+			result_array_final = np.append(result_array_final,result_array,axis=0)
+		#print("Row" ,column)
+		#print(result_array)
+		
+	#print("Final",result_array_final.shape)
+	#print(result_array_final)	
+	return result_array_final

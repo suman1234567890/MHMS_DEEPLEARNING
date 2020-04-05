@@ -9,81 +9,123 @@ import tensorflow
 tensorflow.random.set_seed(18071991)
 from data_loaders import load_data
 from dl_models import build_BILSTM, build_LSTM, build_CNN, build_pre_normalAE, build_pre_denoiseAE, build_RBM
-from normal_models import build_SVR, build_RF, build_NN
+from normal_models import build_SVR, build_RF, build_NN, build_LN
 from sklearn.metrics import mean_squared_error, mean_absolute_error 
 import logging
 from sklearn.preprocessing import MinMaxScaler
 from feature_extract import gen_fea
 from data_loaders_csv import *
-
+#import matplotlib.pyplot as plt
 
 log = "output.log"
-logging.basicConfig(filename=log,level=logging.DEBUG,format='%(asctime)s %(message)s', datefmt='%d/%m/%Y %H:%M:%S')
-if __name__ == '__main__':
-	for time in range(5):
-		idx_test = 1
+logging.basicConfig(filename=log,level=logging.DEBUG,format='', datefmt='%d/%m/%Y %H:%M:%S')
+
+#logging.basicConfig(filename=log,level=logging.DEBUG)
+	
+def mains(t):
+	idx_test = 0
+	tot_iter =5;
+	X_train, y_train, X_test = t[0], t[2], t[1]
+	data_dim = X_train.shape[1]
+	logging.info("X_Train: %s" %(t[0]))
+	logging.info("Y_Train: %s" %(t[2]))
+	logging.info("X_test: %s" %(t[1]))
+	
+	for time in range(tot_iter):
+		idx_test = idx_test+1
 		logging.info("conducting exp.")
 		#t = load_data(True)
-		t=LoadIt()
 		
-		X_train, y_train, X_test, y_test = t[0], t[1], t[2], t[3]
-		data_dim = X_train.shape[1]
+	
+		""" 
+		linear_regression=build_LN()
+		linear_regression.fit(X_train,y_train)
+		y_pred = linear_regression.predict(X_test)
+		logging.info("   linear predicted result: %s" %(y_pred))
+		"""
     	
-    	#liner svm
-		linear_svr = build_SVR('linear')
+		
+		linear_svr = build_SVR('linear',2)
 		linear_svr.fit(X_train, y_train)
 		y_pred = linear_svr.predict(X_test)
-		score= mean_squared_error(y_pred, y_test)
-		mae_score = mean_absolute_error(y_pred, y_test)
-		logging.info("   linear svr result: %f_%f" %(score, mae_score))
-		rbf_svr = build_SVR('rbf')
-		rbf_svr.fit(X_train, y_train)
-		y_pred = rbf_svr.predict(X_test)
-		score= mean_squared_error(y_pred, y_test)
-		mae_score = mean_absolute_error(y_pred, y_test)
-		logging.info("   rbf svr result: %f_%f" %(score, mae_score))
-    	#random forst
+		logging.info(" %f  linear predicted result: %s" %(idx_test, y_pred))
+		#plt.scatter(y_train, y_train, color='blue')
+		#plt.show()
+		
+		#score= mean_squared_error(y_pred, y_test)
+		#mae_score = mean_absolute_error(y_pred, y_test)
+		#logging.info("   linear svr result: %f_%f" %(score, mae_score))
+	idx_test = 0
+	for time in range(tot_iter):
+		idx_test = idx_test+1
 		NUM_ESTIMATOR = 50		
-		NUM_PREEPOCH = 30
-		NUM_BPEPOCH = 30
-		BATH_SIZE = 24
+		NUM_PREEPOCH = 70
+		NUM_BPEPOCH = 50
+		BATH_SIZE = 50
 		rf = build_RF(NUM_ESTIMATOR)
 		rf.fit(X_train, y_train)
 		y_pred = rf.predict(X_test)
-		score= mean_squared_error(y_pred, y_test)
-		mae_score = mean_absolute_error(y_pred, y_test)
-		logging.info("   randomforest  result: %f_%f" %(score, mae_score))
+		logging.info(" r fores  predict  result: %s" %(y_pred))
+
+		#score= mean_squared_error(y_pred, y_test)
+		#mae_score = mean_absolute_error(y_pred, y_test)
+		#logging.info("   randomforest  result: %f_%f" %(score, mae_score))
 		#neural network
+	idx_test = 0
+	for time in range(tot_iter):
+		idx_test = idx_test+1
+		
 		nn_model = build_NN(data_dim)
 		nn_model.fit(X_train, y_train, epochs=NUM_BPEPOCH, batch_size=BATH_SIZE)
 		y_pred = nn_model.predict(X_test)
-		score= mean_squared_error(y_pred, y_test)
-		mae_score = mean_absolute_error(y_pred, y_test)
-		logging.info("   neural network result: %f_%f" %(score, mae_score))
+		logging.info(" neu  predict  result: %s" %(y_pred))
+
+		#score= mean_squared_error(y_pred, y_test)
+		#mae_score = mean_absolute_error(y_pred, y_test)
+		#logging.info("   neural network result: %f_%f" %(score, mae_score))
 		#AE
+	idx_test = 0
+	for time in range(tot_iter):
+		idx_test = idx_test+1
+		
 		normal_AE = build_pre_normalAE(data_dim, X_train, epoch_pretrain=NUM_PREEPOCH, hidDim=[140,280])
 		normal_AE.fit(X_train, y_train, epochs=NUM_BPEPOCH, batch_size=BATH_SIZE)
 		y_pred = normal_AE.predict(X_test)
-		score = mean_squared_error(y_pred, y_test)
-		mae_score = mean_absolute_error(y_pred, y_test)
-		logging.info("   normal ae result: %f_%f" %(score, mae_score))
+		logging.info(" ae  predict  result: %s" %(y_pred))
+
+		#score = mean_squared_error(y_pred, y_test)
+		#mae_score = mean_absolute_error(y_pred, y_test)
+		#logging.info("   normal ae result: %f_%f" %(score, mae_score))
 		#denoise AE
+		
+	idx_test = 0
+	for time in range(tot_iter):
+		idx_test = idx_test+1
 		denois_AE = build_pre_denoiseAE(data_dim, X_train, epoch_pretrain=NUM_PREEPOCH, hidDim=[140,280])
 		denois_AE.fit(X_train, y_train, epochs=NUM_BPEPOCH, batch_size=BATH_SIZE)
 		y_pred = denois_AE.predict(X_test)
-		score = mean_squared_error(y_pred, y_test)
-		mae_score = mean_absolute_error(y_pred, y_test)
-		logging.info("   denoise ae result: %f_%f" %(score, mae_score))
+		logging.info(" denoiseae  predict  result: %s" %(y_pred))
+
+		#score = mean_squared_error(y_pred, y_test)
+		#mae_score = mean_absolute_error(y_pred, y_test)
+		#logging.info("   denoise ae result: %f_%f" %(score, mae_score))
 		# rbf using sigmoid function, feature should be scaled to -1 and 1
+	
+	idx_test = 0
+	for time in range(tot_iter):
+		idx_test = idx_test+1
+		
 		scaler = MinMaxScaler()
 		X_train_rbm = scaler.fit_transform(X_train)
 		rbm = build_RBM(NUM_BPEPOCH, NUM_PREEPOCH, batch_size=BATH_SIZE)
 		rbm.fit(X_train_rbm, y_train)
 		X_test_rbm = scaler.transform(X_test)
 		y_pred = rbm.predict(X_test_rbm)
-		score = mean_squared_error(y_pred, y_test)
-		mae_score = mean_absolute_error(y_pred, y_test)
-		logging.info("   dbn result: %f_%f" %(score, mae_score))
+		logging.info("  dbn predict  result: %s" %(y_pred))
+
+		#score = mean_squared_error(y_pred, y_test)
+		#mae_score = mean_absolute_error(y_pred, y_test)
+		#logging.info("   dbn result: %f_%f" %(score, mae_score))
 		#Bi-directional LSTM
 		#t = load_data(False)
 		"""
@@ -112,5 +154,12 @@ if __name__ == '__main__':
 		score = mean_squared_error(y_pred, y_test)
 		mae_score = mean_absolute_error(y_pred, y_test)
 		logging.info("   cnn result: %f_%f" %(score, mae_score))
-		
 		"""
+		
+if __name__ == '__main__':
+	t=LoadIt0404Test0()
+	mains(t)
+	
+	t=LoadIt0404Test1()
+	mains(t)
+	

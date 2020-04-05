@@ -19,16 +19,10 @@ def load_data(normal_stat=False):
 if __name__ == '__main__':
     t = load_data(True)
     print (t[0].shape)
-    print("-------------")
-    print (t[0])
-    print("-------------")
-    
-    print (t[1].shape)
-    print("-------------")
-    print (t[2].shape)
-    print("-------------")
-    print (t[3].shape)
-    
+    print (t[1].shape )
+    print (t[2].shape )
+    print (t[3].shape )
+   
     
  
     #filepath = "C:\\Python3\\data\\data_seq.p"
