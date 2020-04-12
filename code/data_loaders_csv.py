@@ -47,7 +47,7 @@ def load_data_3103(normal_stat=False):
     return my_data
     
 log = "output_featureextract.log"
-logging.basicConfig(filename=log,level=logging.DEBUG,format='%(asctime)s %(message)s', datefmt='%d/%m/%Y %H:%M:%S')
+logging.basicConfig(filename=log,level=logging.DEBUG,format='', datefmt='%d/%m/%Y %H:%M:%S')
 if __name__ == '__main__':
     data = load_data(True)
     
@@ -223,4 +223,52 @@ def LoadIt0404Test1(normal_state = False):
     print(inputFul)
     return inputFul
     
+def LoadIt0504(count):
     
+     X_rawtrain = load_dataX0504(1)
+     Y_train = load_dataX0504(2)
+     X_rawtest = load_dataX0504(2+count)
+     inputFul = X_rawtrain[:,[0,2]],Y_train,X_rawtest[:,[0,2]]
+     print(inputFul)
+     return inputFul
+     
+def load_dataX0504(normal_stat=1):
+    filepath = {
+        1: "C:\\Python3\\data\\04-03-2020\\05-04-2020\\xtrain.csv",
+        2: "C:\\Python3\\data\\04-03-2020\\05-04-2020\\ytrain.csv",
+        3: "C:\\Python3\\data\\04-03-2020\\05-04-2020\\xtest.csv",
+        4: "C:\\Python3\\data\\04-03-2020\\05-04-2020\\xtest2.csv",
+       
+    }
+    
+   
+    my_data = genfromtxt(filepath.get(normal_stat), delimiter=',') 
+    #with open(filepath, 'r') as file:
+    #    reader = csv.reader(file)
+    return my_data
+
+def LoadIt0604(count):
+    
+     X_rawtrain = load_dataX0604(1)
+     Y_train = load_dataX0604(2)
+     X_rawtest = load_dataX0604(2+count)
+     X_train = customFeatureExtract0404(X_rawtrain,5000)
+     X_test = customFeatureExtract0404(X_rawtest,5000)
+     #inputFul = X_rawtrain[:,[0,2]],Y_train,X_rawtest[:,[0,2]]
+     inputFul = X_train,Y_train,X_test
+     print(inputFul)
+     return inputFul
+     
+def load_dataX0604(normal_stat=1):
+    filepath = {
+        1: "C:\\Python3\\data\\07-04-2020\\X_Train.csv",
+        2: "C:\\Python3\\data\\07-04-2020\\Y_Train.csv",
+        3: "C:\\Python3\\data\\07-04-2020\\X_Test.csv",
+        
+    }
+    
+   
+    my_data = genfromtxt(filepath.get(normal_stat), delimiter=',') 
+    #with open(filepath, 'r') as file:
+    #    reader = csv.reader(file)
+    return my_data

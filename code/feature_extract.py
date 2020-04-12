@@ -85,7 +85,8 @@ def extract_fea_cust(data_slice, num_stat = 10):
 	data_fea = []
 	dim_feature = 1
 	data_fea.append(rms_fea(data_slice))
-	data_fea.append(var_fea(data_slice))
+	#data_fea.append(rms_fea(data_slice))
+	#data_fea.append(var_fea(data_slice))
 	data_fea.append(max_fea(data_slice))
 	#data_fea.append(pp_fea(data_slice))
 	#data_fea.append(skew_fea(data_slice))
@@ -262,7 +263,7 @@ def customFeatureExtract0404(data,sample_size):
 	#new_data = np.ones((data.shape[0],data.shape[1]), dtype=np.float32)
 	row = 0
 	column = 0
-	no_of_feature = 3
+	no_of_feature = 2
 	result_array_final = np.array([])
 	while (column < data.shape[1]):
 		result_array = np.array([])
