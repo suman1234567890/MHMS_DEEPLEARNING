@@ -46,7 +46,7 @@ def load_data_3103(normal_stat=False):
     #    reader = csv.reader(file)
     return my_data
     
-log = "/home/runner/MHMSDEEPLEARNING/output_featureextract.log"
+log = "../output_featureextract.log"
 logging.basicConfig(filename=log,level=logging.DEBUG,format='', datefmt='%d/%m/%Y %H:%M:%S')
 if __name__ == '__main__':
     data = load_data(True)
@@ -302,9 +302,9 @@ def load_dataX1704(normal_stat=1):
 
 def load_dataXONLY2404(normal_stat=1):
     filepath = {
-        1: "/home/runner/MHMSDEEPLEARNING/data/XTrain_Only_feature.csv",
-        2: "/home/runner/MHMSDEEPLEARNING/data/YTrain_for_feature.csv",
-        3: "/home/runner/MHMSDEEPLEARNING/data/XTest_Only_feature.csv",
+        1: "/home/sumon_sadhukhan8/MHMS_DEEPLEARNING/data/XTrain_Only_feature.csv",
+        2: "/home/sumon_sadhukhan8/MHMS_DEEPLEARNING/data/YTrain_for_feature.csv",
+        3: "/home/sumon_sadhukhan8/MHMS_DEEPLEARNING/data/XTest_Only_feature.csv",
         
     }
     
