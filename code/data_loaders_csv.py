@@ -46,7 +46,7 @@ def load_data_3103(normal_stat=False):
     #    reader = csv.reader(file)
     return my_data
     
-log = "output_featureextract.log"
+log = "/home/runner/MHMSDEEPLEARNING/output_featureextract.log"
 logging.basicConfig(filename=log,level=logging.DEBUG,format='', datefmt='%d/%m/%Y %H:%M:%S')
 if __name__ == '__main__':
     data = load_data(True)
@@ -261,9 +261,9 @@ def LoadIt0604(count):
      
 def load_dataX0604(normal_stat=1):
     filepath = {
-        1: "C:\\Python3\\data\\07-04-2020\\X_Train.csv",
-        2: "C:\\Python3\\data\\07-04-2020\\Y_Train.csv",
-        3: "C:\\Python3\\data\\07-04-2020\\X_Test.csv",
+        1: "/home/runner/MHMSDEEPLEARNING/data/X_Train.csv",
+        2: "/home/runner/MHMSDEEPLEARNING/data/Y_Train.csv",
+        3: "/home/runner/MHMSDEEPLEARNING/data/data.csv",
         
     }
     
@@ -272,3 +272,56 @@ def load_dataX0604(normal_stat=1):
     #with open(filepath, 'r') as file:
     #    reader = csv.reader(file)
     return my_data
+
+
+def LoadIt1704(count):
+    
+     X_rawtrain = load_dataX1704(1)
+     Y_train = load_dataX1704(2)
+     X_rawtest = load_dataX1704(2+count)
+     X_train = customFeatureExtract0404(X_rawtrain,5000)
+     X_test = customFeatureExtract0404(X_rawtest,5000)
+     #inputFul = X_rawtrain[:,[0,2]],Y_train,X_rawtest[:,[0,2]]
+     inputFul = X_train,Y_train,X_test
+     print(inputFul)
+     return inputFul
+     
+def load_dataX1704(normal_stat=1):
+    filepath = {
+        1: "/home/runner/MHMSDEEPLEARNING/data/XTrain_17_04.csv",
+        2: "/home/runner/MHMSDEEPLEARNING/data/YTrain_17_04.csv",
+        3: "/home/runner/MHMSDEEPLEARNING/data/Xtest_17_04.csv",
+        
+    }
+    
+   
+    my_data = genfromtxt(filepath.get(normal_stat), delimiter=',') 
+    #with open(filepath, 'r') as file:
+    #    reader = csv.reader(file)
+    return my_data
+
+def load_dataXONLY2404(normal_stat=1):
+    filepath = {
+        1: "/home/runner/MHMSDEEPLEARNING/data/XTrain_Only_feature.csv",
+        2: "/home/runner/MHMSDEEPLEARNING/data/YTrain_for_feature.csv",
+        3: "/home/runner/MHMSDEEPLEARNING/data/XTest_Only_feature.csv",
+        
+    }
+    
+   
+    my_data = genfromtxt(filepath.get(normal_stat), delimiter=',') 
+    #with open(filepath, 'r') as file:
+    #    reader = csv.reader(file)
+    return my_data
+def LoadIt2404():
+    
+    X_train = load_dataXONLY2404(1)
+    Y_train = load_dataXONLY2404(2)
+    X_test = load_dataXONLY2404(3)
+    X_train1 = X_train.reshape(-1,1)
+    y_train1 = Y_train.reshape(-1,1)
+    X_test1 = X_test.reshape(-1,1)
+
+    my_data_for = X_train1,y_train1,X_test1
+    return my_data_for
+

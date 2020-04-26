@@ -92,8 +92,8 @@ def mains(t):
 	for time in range(tot_iter):
 		idx_test = idx_test+1
 		NUM_ESTIMATOR = 50		
-		NUM_PREEPOCH = 70
-		NUM_BPEPOCH = 100
+		NUM_PREEPOCH = 150
+		NUM_BPEPOCH = 175
 		BATH_SIZE = 50
 		rf = build_RF(NUM_ESTIMATOR)
 		rf.fit(X_train, y_train)
@@ -111,7 +111,7 @@ def mains(t):
 	plt.clf()
 	plt.plot( X_train_plot, y_train,  color='red', linewidth=2)
 	plt.plot( X_test, y_predTotal.flatten(), color='blue', linewidth=2)
-	plt.savefig('rforestwithfeature.png')
+	plt.savefig('rforest.png')
 	
 	logging.info("  r fore predicted mean result: %s" %(y_predTotal.mean(axis=0)))	
 
@@ -136,8 +136,13 @@ def mains(t):
 		else:
 			y_predTotal = np.append(y_predTotal,y_pred,axis=0)
 	y_predTotal= np.reshape(y_predTotal,(tot_iter,X_test.shape[0]))
+
+	plt.clf()
+	plt.plot( X_train_plot, y_train,  color='red', linewidth=2)
+	plt.plot( X_test, y_predTotal.flatten(), color='blue', linewidth=2)
+	plt.savefig('neural.png')  
 	logging.info("  neu predicted mean result: %s" %(y_predTotal.mean(axis=0)))
-	
+		
 	idx_test = 0
 	y_predTotal=np.array([])
 	for time in range(tot_iter):
@@ -154,6 +159,12 @@ def mains(t):
 		else:
 			y_predTotal = np.append(y_predTotal,y_pred,axis=0)
 	y_predTotal= np.reshape(y_predTotal,(tot_iter,X_test.shape[0]))
+
+	plt.clf()
+	plt.plot( X_train_plot, y_train,  color='red', linewidth=2)
+	plt.plot( X_test, y_predTotal.flatten(), color='blue', linewidth=2)
+	plt.savefig('ae.png')
+
 	logging.info("  ae predicted mean result: %s" %(y_predTotal.mean(axis=0)))
 		#score = mean_squared_error(y_pred, y_test)
 		#mae_score = mean_absolute_error(y_pred, y_test)
@@ -232,7 +243,7 @@ def mains(t):
 		
 		
 if __name__ == '__main__':
-	t=LoadIt1704(1)
+	t=LoadIt2404()
 	mains(t)
 	
 	#t=LoadIt0604(2)
