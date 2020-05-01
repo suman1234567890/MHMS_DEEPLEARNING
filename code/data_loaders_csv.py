@@ -46,7 +46,7 @@ def load_data_3103(normal_stat=False):
     #    reader = csv.reader(file)
     return my_data
     
-log = "../output_featureextract.log"
+log = "/home/sumon_sadhukhan01/output_featureextract.log"
 logging.basicConfig(filename=log,level=logging.DEBUG,format='', datefmt='%d/%m/%Y %H:%M:%S')
 if __name__ == '__main__':
     data = load_data(True)
@@ -302,9 +302,9 @@ def load_dataX1704(normal_stat=1):
 
 def load_dataXONLY2404(normal_stat=1):
     filepath = {
-        1: "/home/sumon_sadhukhan8/MHMS_DEEPLEARNING/data/XTrain_Only_feature.csv",
-        2: "/home/sumon_sadhukhan8/MHMS_DEEPLEARNING/data/YTrain_for_feature.csv",
-        3: "/home/sumon_sadhukhan8/MHMS_DEEPLEARNING/data/XTest_Only_feature.csv",
+        1: "/home/sumon_sadhukhan01/MHMS_DEEPLEARNING/data/XTrain_Only_feature.csv",
+        2: "/home/sumon_sadhukhan01/MHMS_DEEPLEARNING/data/YTrain_for_feature.csv",
+        3: "/home/sumon_sadhukhan01/MHMS_DEEPLEARNING/data/XTest_Only_feature.csv",
         
     }
     
@@ -313,6 +313,7 @@ def load_dataXONLY2404(normal_stat=1):
     #with open(filepath, 'r') as file:
     #    reader = csv.reader(file)
     return my_data
+
 def LoadIt2404():
     
     X_train = load_dataXONLY2404(1)
@@ -325,3 +326,30 @@ def LoadIt2404():
     my_data_for = X_train1,y_train1,X_test1
     return my_data_for
 
+def LoadIt2904():
+    
+    X_train = load_dataXONLY2904(1)
+    Y_train = load_dataXONLY2904(2)
+    X_test = load_dataXONLY2904(3)
+    Y_test = load_dataXONLY2904(4)
+    #X_train1 = X_train.reshape(-1,1)
+    #y_train1 = Y_train.reshape(-1,1)
+    #X_test1 = X_test.reshape(-1,1)
+
+    my_data_for = X_train,Y_train,X_test,Y_test
+    return my_data_for
+
+def load_dataXONLY2904(normal_stat=1):
+    filepath = {
+        1: "/home/sumon_sadhukhan01/MHMS_DEEPLEARNING/data/29-04/X_Train.csv",
+        2: "/home/sumon_sadhukhan01/MHMS_DEEPLEARNING/data/29-04/Y_Train.csv",
+        3: "/home/sumon_sadhukhan01/MHMS_DEEPLEARNING/data/29-04/X_Test.csv",
+        4: "/home/sumon_sadhukhan01/MHMS_DEEPLEARNING/data/29-04/Y_Test.csv",
+        
+    }
+    
+   
+    my_data = genfromtxt(filepath.get(normal_stat), delimiter=',') 
+    #with open(filepath, 'r') as file:
+    #    reader = csv.reader(file)
+    return my_data

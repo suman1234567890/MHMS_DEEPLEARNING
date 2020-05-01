@@ -22,7 +22,7 @@ def build_BILSTM(timesteps, data_dim, hidDim=[100,140]):
     model.compile(loss="mean_squared_error", optimizer="rmsprop")
     return model
 
-def build_LSTM(timesteps, data_dim, hidDim=[100,140]):
+def build_LSTM1(timesteps, data_dim, hidDim=[100,140]):
     model = Sequential()
     model.add(LSTM(hidDim[0], return_sequences=True,
                         input_shape=(timesteps, data_dim), activation='linear'))
@@ -31,6 +31,28 @@ def build_LSTM(timesteps, data_dim, hidDim=[100,140]):
     model.add(Dense(FINAL_DIM,activation='linear'))
     model.add(Dense(1))
     model.compile(loss="mae", optimizer="sgd")
+    return model
+def build_LSTM(features_set, data_dim, hidDim=[100,140]):
+    
+    #model.compile(loss="mae", optimizer="sgd")
+
+    model = Sequential()
+    model.add(LSTM(units=50, return_sequences=True, input_shape=(features_set.shape[1], 1)))
+    model.add(Dropout(0.2))
+    model.add(LSTM(units=50, return_sequences=True))
+    model.add(Dropout(0.2))
+
+    model.add(LSTM(units=50, return_sequences=True))
+    model.add(Dropout(0.2))
+
+    model.add(LSTM(units=50))
+    model.add(Dropout(0.2))
+    model.add(Dense(units = 1))
+
+    model.compile(optimizer = 'adam', loss = 'mean_squared_error')
+
+
+    
     return model
 
 def build_CNN(timesteps, data_dim, hidDim=[100,140]):
@@ -95,5 +117,5 @@ def build_RBM(num_bp, epoch_pretrain=25, batch_size=24, hidDim=[100,140]):
                                     n_epochs_rbm=epoch_pretrain,
                                     n_iter_backprop=num_bp,
                                     batch_size=batch_size,
-                                    activation_function='tanh')
+                                    activation_function='relu')
     return regressor
