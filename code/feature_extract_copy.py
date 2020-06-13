@@ -299,23 +299,20 @@ def customFeatureExtract0404(data,sample_size):
 	return result_array_final
 
 def customFeatureExtract3105(data):
-    row = 0
-    column = 0
-    no_of_feature = 1
-    result_array_final = np.array([])
-    while row < data.shape[0]:
-        result_array = np.array([])
-        print("---------")
-        print(data[row,:])
-        print("---------")
-        y = extract_fea_cust(data[row, :], no_of_feature)
-        result_array = np.reshape(y, (1, no_of_feature))
-        row = row + 1
-        if result_array_final.shape[0] < 1:
-            result_array_final = result_array
-        else:
-            result_array_final = np.append(result_array_final,
-                result_array, axis=0)
-
-    return result_array_final
-
+	row = 0
+	column = 0
+	no_of_feature = 1
+	result_array_final = np.array([])
+	while (row < data.shape[0]):
+		result_array = np.array([])
+        print(data)
+        y = extract_fea_cust(data[row,:],no_of_feature)
+        
+		result_array = np.reshape(y, ( 1,no_of_feature))
+		row = row + 1
+		if (result_array_final.shape[0] < 1):
+			result_array_final = result_array
+		else:
+			result_array_final = np.append(result_array_final,result_array,axis=0)
+	
+	return result_array_final

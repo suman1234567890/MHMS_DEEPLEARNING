@@ -6,11 +6,11 @@ from keras.models import Sequential
 from keras.layers import LSTM, Bidirectional
 from keras.layers.core import Flatten, Dense, Dropout
 from keras.layers import Input, Dense, Flatten
-from keras.layers import Conv1D,MaxPooling1D
+from keras.layers import Conv1D,MaxPooling1D,MaxPooling2D
 from dbn import SupervisedDBNRegression
 
 dropout_rate = 0.2
-FINAL_DIM = 900 
+FINAL_DIM = 1000
 def build_BILSTM(timesteps, data_dim, hidDim=[100,140]):
     model = Sequential()
     model.add(Bidirectional(LSTM(hidDim[0], return_sequences=True, activation='linear'),
@@ -37,7 +37,7 @@ def build_LSTM(features_set, data_dim, hidDim=[100,140]):
     #model.compile(loss="mae", optimizer="sgd")
 
     model = Sequential()
-    model.add(LSTM(units=50, return_sequences=True, input_shape=(features_set.shape[1], 1)))
+    model.add(LSTM(units=50, return_sequences=True))
     model.add(Dropout(0.2))
     model.add(LSTM(units=50, return_sequences=True))
     model.add(Dropout(0.2))
@@ -49,17 +49,17 @@ def build_LSTM(features_set, data_dim, hidDim=[100,140]):
     model.add(Dropout(0.2))
     model.add(Dense(units = 1))
 
-    model.compile(optimizer = 'adam', loss = 'mean_squared_error')
+    model.compile(optimizer = 'sgd', loss = 'mae')
 
 
     
     return model
 
-def build_CNN(timesteps, data_dim, hidDim=[100,140]):
+def build_CNN(timesteps, data_dim, hidDim=[1,1]):
     model = Sequential()
-    model.add(Conv1D(hidDim[0], 3, activation='linear', input_shape=(timesteps, data_dim)))
-    model.add(Conv1D(hidDim[1], 3, activation='linear'))
-    model.add(MaxPooling1D(2))
+    model.add(Conv1D(hidDim[0], 1, activation='linear', input_shape=(timesteps, data_dim)))
+    model.add(Conv1D(hidDim[1], 1, activation='linear'))
+    model.add(MaxPooling1D(1))
     model.add(Flatten())
     model.add(Dropout(dropout_rate))
     model.add(Dense(FINAL_DIM,activation='linear'))
@@ -110,12 +110,12 @@ def build_pre_denoiseAE(data_dim, X_train, epoch_pretrain=25,  hidDim=[100,140])
 
 
 
-def build_RBM(num_bp, epoch_pretrain=25, batch_size=24, hidDim=[100,140]):
+def build_RBM(num_bp, epoch_pretrain=125, batch_size=24, hidDim=[100,140]):
     regressor = SupervisedDBNRegression(hidden_layers_structure=hidDim,
                                     learning_rate_rbm=0.01,
                                     learning_rate=0.01,
                                     n_epochs_rbm=epoch_pretrain,
                                     n_iter_backprop=num_bp,
                                     batch_size=batch_size,
-                                    activation_function='relu')
+                                    activation_function='sigmoid')
     return regressor

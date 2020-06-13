@@ -1,5 +1,5 @@
-
 from feature_extract import *
+
 from numpy  import genfromtxt
 import logging
 import pickle
@@ -341,11 +341,45 @@ def LoadIt2904():
 
 def load_dataXONLY2904(normal_stat=1):
     filepath = {
-        1: "/home/sumon_sadhukhan01/MHMS_DEEPLEARNING/data/29-04/X_Train.csv",
-        2: "/home/sumon_sadhukhan01/MHMS_DEEPLEARNING/data/29-04/Y_Train.csv",
-        3: "/home/sumon_sadhukhan01/MHMS_DEEPLEARNING/data/29-04/X_Test.csv",
-        4: "/home/sumon_sadhukhan01/MHMS_DEEPLEARNING/data/29-04/Y_Test.csv",
+        1: "/home/sumon_sadhukhan01/MHMS_DEEPLEARNING/data/brady/X_Train7.3.csv",
+        2: "/home/sumon_sadhukhan01/MHMS_DEEPLEARNING/data/brady/Y_Train7.3.csv",
+        3: "/home/sumon_sadhukhan01/MHMS_DEEPLEARNING/data/brady/X_Test7.9.csv",
+        4: "/home/sumon_sadhukhan01/MHMS_DEEPLEARNING/data/brady/Y_Test7.9.csv",
         
+    }
+    
+   
+    my_data = genfromtxt(filepath.get(normal_stat), delimiter=',') 
+    #with open(filepath, 'r') as file:
+    #    reader = csv.reader(file)
+    return my_data
+def LoadIt3105():
+    
+    X_rawtrain = load_dataXONLY3105(1)
+    Y_train = load_dataXONLY3105(2)
+    X_rawtest = load_dataXONLY3105(3)
+    Y_test = load_dataXONLY3105(4)
+    #X_train1 = X_train.reshape(-1,1)
+    #y_train1 = Y_train.reshape(-1,1)
+    #X_test1 = X_test.reshape(-1,1)
+    X_train = customFeatureExtract3105(X_rawtrain)
+    
+    X_test = customFeatureExtract3105(X_rawtest)
+    
+    my_data_for = X_train,Y_train,X_test,Y_test
+    print("data_extract") 
+    print(my_data_for)
+    return my_data_for
+
+def load_dataXONLY3105(normal_stat=1):
+    filepath = {
+       
+       
+        1: "/home/sumon_sadhukhan01/MHMS_DEEPLEARNING/data/brady/X_Train7.3.csv",
+        2: "/home/sumon_sadhukhan01/MHMS_DEEPLEARNING/data/brady/Y_Train7.3.csv",
+        3: "/home/sumon_sadhukhan01/MHMS_DEEPLEARNING/data/brady/X_Test7.9.csv",
+        4: "/home/sumon_sadhukhan01/MHMS_DEEPLEARNING/data/brady/Y_Test7.9.csv",
+
     }
     
    
